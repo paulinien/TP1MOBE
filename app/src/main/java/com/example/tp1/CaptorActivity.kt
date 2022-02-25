@@ -6,6 +6,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.tp1.databinding.ActivityCaptorBinding
 
 class CaptorActivity : AppCompatActivity(), SensorEventListener {
@@ -43,6 +44,7 @@ class CaptorActivity : AppCompatActivity(), SensorEventListener {
                 binding.x.text = "$magField_x"
                 binding.y.text = "$magField_y"
                 binding.z.text = "$magField_z"
+                Log.d("INFO", "$magField_x : $magField_y : $magField_z")
             }
         }
     }

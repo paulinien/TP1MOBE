@@ -1,45 +1,58 @@
 package com.example.tp1
 
-import android.content.Context
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.os.Vibrator
-import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tp1.databinding.ActivityMainBinding
-import kotlin.system.exitProcess
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Runnable {
 
-    private lateinit var button: Button
     private lateinit var binding: ActivityMainBinding
+    private var mHandler: Handler = Handler()
+    private var i = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        binding.button.setOnClickListener(::onClickListener)
-//        tvCounter.text = "${counter}"
+        binding.buttonNext.setOnClickListener(::onClickCommencerButton)
+        binding.buttonCamera.setOnClickListener(::onClickCameraButton)
+        binding.img.setImageDrawable(getDrawable(R.drawable.first_img))
         setContentView(binding.root)
-//        mHandler.postDelayed(mUpdateTimeTask, 10000);
+        run()
     }
 
-    fun onClickListener(v: View?) {
-
+    fun onClickCommencerButton(v: View?) {
+        switchActivity(CaptorActivity::class.java)
     }
+
+    fun onClickCameraButton(v: View?) {
+        switchActivity(CameraActivity::class.java)
+    }
+
+    fun switchActivity(c : Class<out AppCompatActivity>) {
+        val intent = Intent(this, c)
+        startActivity(intent)
+        finishActivity(0)
+    }
+
     override fun onResume() {
         super.onResume()
     }
 
     override fun onStop() {
         super.onStop()
+    }
+
+    override fun run() {
+        if((++i)%2 == 0) {
+            binding.img.setImageDrawable(getDrawable(R.drawable.first_img))
+        } else {
+            binding.img.setImageDrawable(getDrawable(R.drawable.second_img))
+        }
+        mHandler.postDelayed(this, 1000)
     }
 
 }
