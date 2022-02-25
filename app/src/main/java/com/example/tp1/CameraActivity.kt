@@ -8,26 +8,22 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tp1.databinding.ActivityCameraBinding
 
 
 class CameraActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityCameraBinding
     private val CAMERA_REQUEST = 1888
-    private lateinit var imageView: ImageView
-    private lateinit var textView: TextView
     private val MY_CAMERA_PERMISSION_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_camera)
-        textView = findViewById<View>(R.id.textView) as TextView
-        textView.text = ""
-        imageView = findViewById<View>(R.id.imageView) as ImageView
-        val photoButton: Button = findViewById<View>(R.id.button) as Button
+        binding = ActivityCameraBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.textView.text = ""
     }
 
     fun onClick(v: View?) {
@@ -75,8 +71,8 @@ class CameraActivity : AppCompatActivity() {
                     }
                 }
             }
-            textView.text = "$countRedPixel"
-            imageView.setImageBitmap(photo)
+            binding.textView.text = "$countRedPixel"
+            binding.imageView.setImageBitmap(photo)
         }
     }
 }
